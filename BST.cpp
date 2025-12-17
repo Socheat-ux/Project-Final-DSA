@@ -48,11 +48,11 @@ Node* insertNode(Node* node, int studentId, string name, int age) {
     return node;
 }
 
-//Print tree Root->Left->Right
+//Print tree Left->Root->Right
 void printAllStudent(Node* root){
     if(root == NULL) return;
     printAllStudent(root->left);
-    cout << root->studentId << "-" << root->name << "-"<< root->age << endl;
+    cout << root->studentId << " - " << "Name: " << root->name << "    Age: "<< root->age << endl;
     printAllStudent(root->right);
 }
 
@@ -132,16 +132,6 @@ Node* deleteStudent(Node* node, int studentId) {
     return node;
 }
 
-//5. Print all remaining students’ IDs in ascending order
-void printInOrder(Node* node){
-    if(node == NULL){
-        return;
-    }
-    printInOrder(node->left);
-    cout << node->studentId << " - " << node->name << " (Age: " << node->age << ")" << endl;
-    printInOrder(node->right);
-}
-
 // Count total students
 int countNodes(Node* node) {
     if (node == NULL) return 0;
@@ -156,19 +146,19 @@ void treeToVector(Node* node, vector<Student>& students) {
     treeToVector(node->right, students);
 }
 
-// Merge function - combines two sorted halves by student ID
+// Merge function - combines two sorted halves by AGE
 void merge(vector<Student>& arr, int left, int mid, int right) {
     int n1 = mid - left + 1;  // Size of left subarray
     int n2 = right - mid;      // Size of right subarray
     
     // Create temporary vectors
-    vector<Student> leftArray, rightArray;
+    vector<Student> leftVec, rightVec;
     
     // Copy data to temporary vectors
     for (int i = 0; i < n1; i++)
-        leftArray.push_back(arr[left + i]);
+        leftVec.push_back(arr[left + i]);
     for (int i = 0; i < n2; i++)
-        rightArray.push_back(arr[mid + 1 + i]);
+        rightVec.push_back(arr[mid + 1 + i]);
     
     // Merge the temporary vectors back into arr[left..right]
     int i = 0;     // Initial index of left subarray
@@ -176,32 +166,33 @@ void merge(vector<Student>& arr, int left, int mid, int right) {
     int k = left;  // Initial index of merged subarray
     
     while (i < n1 && j < n2) {
-        if (leftArray[i].studentId <= rightArray[j].studentId) {
-            arr[k] = leftArray[i];
+        // CHANGED: Compare by age instead of studentId
+        if (leftVec[i].age <= rightVec[j].age) {
+            arr[k] = leftVec[i];
             i++;
         } else {
-            arr[k] = rightArray[j];
+            arr[k] = rightVec[j];
             j++;
         }
         k++;
     }
     
-    // Copy remaining elements of leftArray, if any
+    // Copy remaining elements of leftVec, if any
     while (i < n1) {
-        arr[k] = leftArray[i];
+        arr[k] = leftVec[i];
         i++;
         k++;
     }
     
-    // Copy remaining elements of rightArray, if any
+    // Copy remaining elements of rightVec, if any
     while (j < n2) {
-        arr[k] = rightArray[j];
+        arr[k] = rightVec[j];
         j++;
         k++;
     }
 }
 
-// Merge Sort function - recursively sorts by student ID
+// Merge Sort function - recursively sorts by AGE
 void mergeSort(vector<Student>& arr, int left, int right) {
     if (left < right) {
         // Find the middle point
@@ -221,8 +212,8 @@ void mergeSort(vector<Student>& arr, int left, int right) {
 // Display sorted students
 void displaySortedStudents(vector<Student>& students) {
     for (int i = 0; i < students.size(); i++) {
-        cout << students[i].studentId << " - " << students[i].name 
-             << " (Age: " << students[i].age << ")" << endl;
+        cout << students[i].studentId << " - Name: " << students[i].name 
+             << "    Age: " << students[i].age << "" << endl;
     }
 }
 
