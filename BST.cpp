@@ -9,7 +9,12 @@ struct Node {
     Node* left;
     Node* right;
 
-    Node(int id, string n, int a) : studentId(id), name(n), age(a), left(NULL), right(NULL) {}
+    Node(int id, string n, int a) : 
+        studentId(id), 
+        name(n), 
+        age(a), 
+        left(NULL), 
+        right(NULL) {}
 };
 
 // Function to create a new node
@@ -21,7 +26,7 @@ Node* createNode(int studentId, string name, int age) {
 // Insert a student node
 Node* insertNode(Node* node, int studentId, string name, int age) {
     if (node == NULL) {
-        cout << "Enrolled: " << studentId << " - " << name << " (Age: " << age << ")" << endl;
+        cout << "Insertion: " << studentId << " - " << name << " (Age: " << age << ")" << endl;
         return createNode(studentId, name, age);
     }
         
@@ -127,21 +132,12 @@ int countNodes(Node* node) {
     return 1 + countNodes(node->left) + countNodes(node->right);
 }
 
-// Cleanup memory
-void deleteTree(Node* node) {
-    if (node) {
-        deleteTree(node->left);
-        deleteTree(node->right);
-        delete node;
-    }
-}
-
 //Display Choice
 void displayMenu() {
     cout << "----- Register Office ------" << endl;
     cout << "1. View Student List" << endl;
     cout << "2. Total Student" <<endl;    
-    cout << "3. Enroll New Student" <<endl;
+    cout << "3. Insert New Student" <<endl;
     cout << "4. Search Student by ID" <<endl;
     cout << "5. Remove Student by ID" << endl;
     cout << "0. Exit" <<endl;
@@ -234,9 +230,6 @@ int main() {
         }
         
     } while (choice != 0);
-    
-    // Clean up memory before exiting
-    deleteTree(node);
     
     return 0;
 }
