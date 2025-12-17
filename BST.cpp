@@ -51,8 +51,8 @@ Node* insertNode(Node* node, int studentId, string name, int age) {
 //Print tree Root->Left->Right
 void printAllStudent(Node* root){
     if(root == NULL) return;
-    cout << root->studentId << "-" << root->name << root->age << endl;
     printAllStudent(root->left);
+    cout << root->studentId << "-" << root->name << "-"<< root->age << endl;
     printAllStudent(root->right);
 }
 
@@ -279,7 +279,21 @@ int main() {
                 printAllStudent(node);
                 break;
             }
+
             case 2: {
+                cout << "\nStudents Sorted by ID (Merge Sort)" << endl;
+                vector<Student> students;
+                treeToVector(node, students);
+                if (students.size() > 0) {
+                    mergeSort(students, 0, students.size() - 1);
+                    displaySortedStudents(students);
+                } else {
+                    cout << "No students to sort." << endl;
+                }
+                break;
+            }
+            
+            case 3: {
                 cout << "\nEnter Student ID: ";
                 cin >> studentId;
                 cin.ignore();
@@ -291,7 +305,7 @@ int main() {
                 break;
             }
             
-            case 3: {
+            case 4: {
                 cout << "\nEnter Student ID to search: ";
                 cin >> studentId;
                 Node* result = search(node, studentId);
@@ -304,7 +318,7 @@ int main() {
                 break;
             }
             
-            case 4: {
+            case 5: {
                 cout << "\nEnter Student ID to remove: ";
                 cin >> studentId;
                 Node* result = search(node, studentId);
@@ -314,19 +328,6 @@ int main() {
                     cout << "Student removed successfully!" << endl;
                 } else {
                     cout << "Student with ID " << studentId << " not found." << endl;
-                }
-                break;
-            }
-            
-            case 5: {
-                cout << "\nStudents Sorted by ID (Merge Sort)" << endl;
-                vector<Student> students;
-                treeToVector(node, students);
-                if (students.size() > 0) {
-                    mergeSort(students, 0, students.size() - 1);
-                    displaySortedStudents(students);
-                } else {
-                    cout << "No students to sort." << endl;
                 }
                 break;
             }
