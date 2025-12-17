@@ -245,11 +245,11 @@ void enrollStudent(Node* root, int studentId, string name, int age) {
 void displayMenu() {
     cout << "----- Register Office ------" << endl;
     cout << "1. View Student List" << endl;
-    cout << "2. Enroll New Student" <<endl;
-    cout << "3.Search Student by ID" <<endl;
-    cout << "4.Remove Student by ID" <<endl;
-    cout << "5.Sort Students by ID (Merge Sort)" << endl;
-    cout << "0.Exit" <<endl;
+    cout << "2. Sort Students by AGE" <<endl;
+    cout << "3. Enroll New Student" <<endl;
+    cout << "4. Search Student by ID" <<endl;
+    cout << "5. Remove Student by ID" << endl;
+    cout << "0. Exit" <<endl;
     cout << "Enter choice: ";
 }
 
@@ -277,11 +277,12 @@ int main() {
             case 1: {
                 cout << "\n=== Student List ===" << endl;
                 printAllStudent(node);
+                cout << "\n";
                 break;
             }
 
             case 2: {
-                cout << "\nStudents Sorted by ID (Merge Sort)" << endl;
+                cout << "\nStudents Sorted by AGE" << endl;
                 vector<Student> students;
                 treeToVector(node, students);
                 if (students.size() > 0) {
@@ -290,6 +291,7 @@ int main() {
                 } else {
                     cout << "No students to sort." << endl;
                 }
+                cout << "\n";
                 break;
             }
             
@@ -302,6 +304,7 @@ int main() {
                 cout << "Enter Student Age: ";
                 cin >> age;
                 node = insertNode(node, studentId, name, age);
+                cout << "\n";
                 break;
             }
             
@@ -315,6 +318,7 @@ int main() {
                 } else {
                     cout << "Student with ID " << studentId << " not found." << endl;
                 }
+                cout << "\n";
                 break;
             }
             
@@ -329,6 +333,7 @@ int main() {
                 } else {
                     cout << "Student with ID " << studentId << " not found." << endl;
                 }
+                cout << "\n";
                 break;
             }
 
