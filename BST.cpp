@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <vector>
 using namespace std;
 
 struct Node {
@@ -9,17 +8,8 @@ struct Node {
     int age;
     Node* left;
     Node* right;
-    
-    Node(int id, string n, int a) : studentId(id), name(n), age(a), left(NULL), right(NULL) {}
-};
 
-// Structure for storing student data (for sorting)
-struct Student {
-    int studentId;
-    string name;
-    int age;
-    
-    Student(int id, string n, int a) : studentId(id), name(n), age(a) {}
+    Node(int id, string n, int a) : studentId(id), name(n), age(a), left(NULL), right(NULL) {}
 };
 
 // Function to create a new node
@@ -137,85 +127,6 @@ int countNodes(Node* node) {
     return 1 + countNodes(node->left) + countNodes(node->right);
 }
 
-// Convert BST to vector for sorting
-void treeToVector(Node* node, vector<Student>& students) {
-    if (node == NULL) return;
-    students.push_back(Student(node->studentId, node->name, node->age));
-    treeToVector(node->left, students);
-    treeToVector(node->right, students);
-}
-
-// Merge function - combines two sorted halves by AGE
-void merge(vector<Student>& arr, int left, int mid, int right) {
-    int n1 = mid - left + 1;  // Size of left subarray
-    int n2 = right - mid;      // Size of right subarray
-    
-    // Create temporary vectors
-    vector<Student> leftVec, rightVec;
-    
-    // Copy data to temporary vectors
-    for (int i = 0; i < n1; i++)
-        leftVec.push_back(arr[left + i]);
-    for (int i = 0; i < n2; i++)
-        rightVec.push_back(arr[mid + 1 + i]);
-    
-    // Merge the temporary vectors back into arr[left..right]
-    int i = 0;     // Initial index of left subarray
-    int j = 0;     // Initial index of right subarray
-    int k = left;  // Initial index of merged subarray
-    
-    while (i < n1 && j < n2) {
-        // CHANGED: Compare by age instead of studentId
-        if (leftVec[i].age <= rightVec[j].age) {
-            arr[k] = leftVec[i];
-            i++;
-        } else {
-            arr[k] = rightVec[j];
-            j++;
-        }
-        k++;
-    }
-    
-    // Copy remaining elements of leftVec, if any
-    while (i < n1) {
-        arr[k] = leftVec[i];
-        i++;
-        k++;
-    }
-    
-    // Copy remaining elements of rightVec, if any
-    while (j < n2) {
-        arr[k] = rightVec[j];
-        j++;
-        k++;
-    }
-}
-
-// Merge Sort function - recursively sorts by AGE
-void mergeSort(vector<Student>& arr, int left, int right) {
-    if (left < right) {
-        // Find the middle point
-        int mid = left + (right - left) / 2;
-        
-        // Sort first half
-        mergeSort(arr, left, mid);
-        
-        // Sort second half
-        mergeSort(arr, mid + 1, right);
-        
-        // Merge the sorted halves
-        merge(arr, left, mid, right);
-    }
-}
-
-// Display sorted students
-void displaySortedStudents(vector<Student>& students) {
-    for (int i = 0; i < students.size(); i++) {
-        cout << students[i].studentId << " - Name: " << students[i].name 
-             << "    Age: " << students[i].age << "" << endl;
-    }
-}
-
 // Cleanup memory
 void deleteTree(Node* node) {
     if (node) {
@@ -225,21 +136,14 @@ void deleteTree(Node* node) {
     }
 }
 
-// Enroll a single student
-void enrollStudent(Node* root, int studentId, string name, int age) {
-    root = insertNode(root, studentId, name, age);
-}
-
-
 //Display Choice
 void displayMenu() {
     cout << "----- Register Office ------" << endl;
     cout << "1. View Student List" << endl;
-    cout << "2. Sort Students by AGE" <<endl;
-    cout << "3. Total Student" <<endl;    
-    cout << "4. Enroll New Student" <<endl;
-    cout << "5. Search Student by ID" <<endl;
-    cout << "6. Remove Student by ID" << endl;
+    cout << "2. Total Student" <<endl;    
+    cout << "3. Enroll New Student" <<endl;
+    cout << "4. Search Student by ID" <<endl;
+    cout << "5. Remove Student by ID" << endl;
     cout << "0. Exit" <<endl;
     cout << "Enter choice: ";
 }
@@ -271,28 +175,13 @@ int main() {
                 cout << "\n";
                 break;
             }
-
             case 2: {
-                cout << "\nStudents Sorted by AGE" << endl;
-                vector<Student> students;
-                treeToVector(node, students);
-                if (students.size() > 0) {
-                    mergeSort(students, 0, students.size() - 1);
-                    displaySortedStudents(students);
-                } else {
-                    cout << "No students to sort." << endl;
-                }
-                cout << "\n";
-                break;
-            }
-            
-            case 3: {
                 cout << "\n---The total student: " << countNodes(node) << " Student---" << "\n";
                 cout << "\n";
                 break;
             }
 
-            case 4: {
+            case 3: {
                 cout << "\nEnter Student ID: ";
                 cin >> studentId;
                 cin.ignore();
@@ -305,7 +194,7 @@ int main() {
                 break;
             }
             
-            case 5: {
+            case 4: {
                 cout << "\nEnter Student ID to search: ";
                 cin >> studentId;
                 Node* result = search(node, studentId);
@@ -319,7 +208,7 @@ int main() {
                 break;
             }
             
-            case 6: {
+            case 5: {
                 cout << "\nEnter Student ID to remove: ";
                 cin >> studentId;
                 Node* result = search(node, studentId);
