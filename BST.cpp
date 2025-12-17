@@ -56,7 +56,6 @@ void printAllStudent(Node* root){
     printAllStudent(root->right);
 }
 
-
 //3. Search Student
 Node* search(Node* node, int id){
     if (node == NULL){
@@ -237,9 +236,10 @@ void displayMenu() {
     cout << "----- Register Office ------" << endl;
     cout << "1. View Student List" << endl;
     cout << "2. Sort Students by AGE" <<endl;
-    cout << "3. Enroll New Student" <<endl;
-    cout << "4. Search Student by ID" <<endl;
-    cout << "5. Remove Student by ID" << endl;
+    cout << "3. Total Student" <<endl;    
+    cout << "4. Enroll New Student" <<endl;
+    cout << "5. Search Student by ID" <<endl;
+    cout << "6. Remove Student by ID" << endl;
     cout << "0. Exit" <<endl;
     cout << "Enter choice: ";
 }
@@ -287,6 +287,12 @@ int main() {
             }
             
             case 3: {
+                cout << "\n---The total student: " << countNodes(node) << " Student---" << "\n";
+                cout << "\n";
+                break;
+            }
+
+            case 4: {
                 cout << "\nEnter Student ID: ";
                 cin >> studentId;
                 cin.ignore();
@@ -299,7 +305,7 @@ int main() {
                 break;
             }
             
-            case 4: {
+            case 5: {
                 cout << "\nEnter Student ID to search: ";
                 cin >> studentId;
                 Node* result = search(node, studentId);
@@ -313,7 +319,7 @@ int main() {
                 break;
             }
             
-            case 5: {
+            case 6: {
                 cout << "\nEnter Student ID to remove: ";
                 cin >> studentId;
                 Node* result = search(node, studentId);
