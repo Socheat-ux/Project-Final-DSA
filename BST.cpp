@@ -26,7 +26,7 @@ Node* createNode(int studentId, string name, int age) {
 // Insert a student node
 Node* insertNode(Node* node, int studentId, string name, int age) {
     if (node == NULL) {
-        cout << "Insertion: " << studentId << " - " << name << " (Age: " << age << ")" << endl;
+        cout << "Insert: " << studentId << " - " << name << " (Age: " << age << ")" << endl;
         return createNode(studentId, name, age);
     }
         
@@ -92,7 +92,6 @@ Node* deleteStudent(Node* node, int studentId) {
     else {
         // CASE: Leaf node (no children)
         if (node->left == NULL && node->right == NULL) {
-            delete(node);
             return NULL;
         }
         
@@ -130,6 +129,15 @@ Node* deleteStudent(Node* node, int studentId) {
 int countNodes(Node* node) {
     if (node == NULL) return 0;
     return 1 + countNodes(node->left) + countNodes(node->right);
+}
+
+// Cleanup memory
+void deleteTree(Node* node) {
+    if (node) {
+        deleteTree(node->left);
+        deleteTree(node->right);
+        delete node;
+    }
 }
 
 //Display Choice
@@ -230,6 +238,9 @@ int main() {
         }
         
     } while (choice != 0);
+    
+    // Clean up memory before exiting
+    deleteTree(node);
     
     return 0;
 }
